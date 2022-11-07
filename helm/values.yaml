@@ -1,0 +1,55 @@
+replicaCount: 1
+
+namespace: uvr
+
+azureTenant: a12a82ff-eb68-4d6d-b3c7-c4fb2d2220e5
+
+image:
+  repository:  zumregistry.azurecr.cn/zum-uvr-china:latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: { }
+  name: "zum-uvr"
+
+podAnnotations: { }
+podSecurityContext: { }
+securityContext: { }
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }
+
+db:
+  username: "uvr"
+
+kafka:
+  ssl:
+    truststore:
+      location: "/jks/kafkaTrustStore.p12"
+    keystore:
+      location: "/jks/kafkaKeyStore.jks"
